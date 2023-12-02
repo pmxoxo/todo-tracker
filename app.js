@@ -94,5 +94,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    document.getElementById('newtask').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            newTask();
+        }
+    });
+
     document.getElementById('addTaskButton').addEventListener('click', newTask);
 });
