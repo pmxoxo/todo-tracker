@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
         deleteButton.textContent = 'Delete';
 
         // Append Task, Checkbox, and Delete button to listItem
+        listItem.appendChild(taskTextSpan);
         listItem.appendChild(checkButton);
-        listItem.appendChild(taskTextSpan); // Changed to taskTextSpan
         listItem.appendChild(deleteButton);
 
         document.getElementById('taskList').appendChild(listItem);
