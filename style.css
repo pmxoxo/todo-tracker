@@ -10,10 +10,19 @@ body {
     background-attachment: fixed;
 }
 
+::selection {
+    background-color: white;
+    color:
+}
 
 #taskList {
     list-style-type: none;
-    padding: 0;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#taskList li {
+    margin-top: 5px;
 }
 
 /* 
@@ -92,10 +101,11 @@ Button Styling
 }
 
 button {
-  padding: 6px 14px;
+  padding: 6px 10px;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
+
 
   color: #fff;
   background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
