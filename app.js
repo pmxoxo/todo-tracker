@@ -1,7 +1,17 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     function newTask() {
         var taskValue = document.getElementById('newtask').value;
-        console.log("Hello " + taskValue);
+
+        if (taskValue === '') {
+            alert("Task cannot be empty")
+            return;
+        }
+        
+        console.log("Hello " + taskValue);  
+        
+        document.getElementById('newtask').value = '';
     }
     document.getElementById('addTaskButton').addEventListener('click', newTask);
 });
+
