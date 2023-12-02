@@ -10,6 +10,16 @@ body {
     background-attachment: fixed;
 }
 
+
+#taskList {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* 
+Background Animation
+*/ 
+
 @keyframes gradient {
     0% {
         background-position: 0% 0%;
@@ -71,6 +81,10 @@ body {
     }
 }
 
+
+/*
+Button Styling
+*/
 
 .completed {
     text-decoration: line-through;

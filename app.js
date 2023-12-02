@@ -1,49 +1,97 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+    loadTasks();
+
     function newTask() {
         var taskValue = document.getElementById('newtask').value;
 
-        // Checks to see if input field is empty
         if (taskValue === '') {
             alert("Task cannot be empty");
             return;
         }
-
         // Create a new list item for each task
         var listItem = document.createElement('li');
-
-        // Text Node to store the input of the task name
-        var taskText = document.createTextNode(taskValue);
-
-        // Checkbox to mark completed tasks
+        // Text node to store Task Name
+        var taskTextSpan = document.createElement('span'); // Changed to span
+        taskTextSpan.textContent = taskValue; // Changed to textContent
+        // Create Checkbox to 'complete' each task
         var checkButton = document.createElement('input');
         checkButton.type = 'checkbox';
-
-        // Delete button to remove unwanted tasks
+        // Create Delete button to delete unwanted tasks
         var deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete'; // Set text content for delete button
+        deleteButton.textContent = 'Delete';
 
-        // Append elements to the new list item
-        listItem.appendChild(taskText);
+        // Append Task, Checkbox, and Delete button to listItem
         listItem.appendChild(checkButton);
+        listItem.appendChild(taskTextSpan); // Changed to taskTextSpan
         listItem.appendChild(deleteButton);
 
-        // Append the new list item to the task list
         document.getElementById('taskList').appendChild(listItem);
 
-
-
-        // Event Listeners for Checkbox & Delete Buttons
+        // Checkbox toggle to set 'completed' class to listItems
         checkButton.addEventListener('click', function() {
             listItem.classList.toggle('completed');
+            saveTasks();
         });
 
-
+        // Delete button functionality
         deleteButton.addEventListener('click', function() {
             listItem.remove();
+            saveTasks();
         });
 
-        // Clear input field after adding a new task 
+        // Make sure input field is not empty
         document.getElementById('newtask').value = '';
+        saveTasks();
+    }
+
+    // Save Tasks function to save in Local Storage
+    function saveTasks() {
+        var tasks = [];
+        document.querySelectorAll('#taskList li').forEach(function(taskListItem) {
+            var taskText = taskListItem.querySelector('span').textContent; // Only save text in span
+            tasks.push({
+                text: taskText,
+                completed: taskListItem.classList.contains('completed')
+            });
+        });
+
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Load Tasks function to load previously saved Tasks and their state
+    function loadTasks() {
+        var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.forEach(function(task) {
+            var listItem = document.createElement('li');
+            var taskTextSpan = document.createElement('span'); // Changed to span
+            taskTextSpan.textContent = task.text; // Changed to textContent
+            var checkButton = document.createElement('input');
+            checkButton.type = 'checkbox';
+
+            checkButton.addEventListener('click', function() {
+                listItem.classList.toggle('completed');
+                saveTasks();
+            });
+
+            if (task.completed) {
+                listItem.classList.add('completed');
+                checkButton.checked = true;
+            }
+
+            var deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+
+            deleteButton.addEventListener('click', function() {
+                listItem.remove();
+                saveTasks();
+            });
+
+            listItem.appendChild(checkButton);
+            listItem.appendChild(taskTextSpan); // Changed to taskTextSpan
+            listItem.appendChild(deleteButton);
+            document.getElementById('taskList').appendChild(listItem);
+        });
     }
 
     document.getElementById('addTaskButton').addEventListener('click', newTask);
